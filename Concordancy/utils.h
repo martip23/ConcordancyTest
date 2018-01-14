@@ -11,7 +11,7 @@ using namespace std;
 
 // Custom mod function since % is only "division remainder"
 int mod(int a, int b) {
-	{return (a%b + b) % b; }
+	return (a%b + b) % b;
 }
 
 // Does a Gale Comparison of two sets of numbers on a different cyclical order
@@ -22,6 +22,7 @@ int mod(int a, int b) {
 // n: ground set
 // ALL INTS MUST BE POSITIVE INTEGERS
 bool galeCompare(int a, int b, int i, int n) {
+	if (a == b) { return true; }
 	return mod(a - i, n) < mod(b - i, n);
 }
 
@@ -69,34 +70,58 @@ vector<vector<int>> grassmannNecklace(const vector<int> permutation) {
 }
 
 vector<vector<int>> subsetsOfSizeN(int n, int k) {
-	vector<vector<int>> bases;
+	vector<vector<int>> subsets;
 
 	string bitmask(k, 1); // K leading 1's
 	bitmask.resize(n, 0); // N-K trailing 0's
 	int timesIterated = 0;
 						  // print integers and permute bitmask
 	do {
-		bases.push_back({});
+		subsets.push_back({});
 		for (int i = 0; i < n; ++i) // [0..N-1] integers
 		{
 			if (bitmask[i]) {
-				bases[timesIterated].push_back(i+1);
+				subsets[timesIterated].push_back(i+1);
 			}
 		}
 		timesIterated++;
 	} while (prev_permutation(bitmask.begin(), bitmask.end()));
 	
-	return bases;
+	return subsets;
 }
 
 // Finds all of the bases of a specific grassman necklace.
 vector<vector<int>> findBases(const vector<vector<int>> grassmann) {
 	vector<vector<int>> bases;
-	int grassmannLength = grassmann.size();
+	int gmLength = grassmann.size(); // grassmann length
 	int beadSize = grassmann[0].size();
+	vector<vector<int>> subsets = subsetsOfSizeN(gmLength, beadSize);
 
-//	vector<int> subset{ values.cbegin(), values.cbegin() + beadSize };
+	// Grab a subset
+	for (int i = 1; i <= subsets.size(); i++) {
+		bool good = true;
 
+		// Grab a bead
+		for (int j = 1; j <= gmLength; j++) {
+			sort(subsets[i-1].begin(), subsets[i-1].end(), [j, beadSize](int a, int b) {
+				return galeCompare(a, b, j, beadSize); });
+
+			// Compare subset digit with bead digit
+			for (int k = 1; k <= beadSize; k++) {
+				if (galeCompare(subsets[i - 1][k - 1],
+					grassmann[j - 1][k - 1], i, gmLength)) {
+					good = false;
+					break;
+				}
+			}
+			if (!good) { break; }
+		}
+		if (good) {
+			sort(subsets[i-1].begin(), subsets[i-1].end(), [](int a, int b) {
+				return a < b; });
+			bases.push_back(subsets[i-1]);
+		}
+	}
 	return bases;
 }
 
