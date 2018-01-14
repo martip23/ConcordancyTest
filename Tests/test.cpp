@@ -1,6 +1,6 @@
 #include "pch.h"
 #include <vector>
-#include"../ConcordancyTestSource/utils.h"
+#include"../Concordancy/utils.h"
 using namespace std;
 
 TEST(UtilsTest, Comparisons) {
@@ -32,5 +32,11 @@ TEST(GrassmannNecklaceTest, PermutationToGM) {
 	vector<vector<int>> gm = { {1,2,4},{2,3,4},{3,4,1},{4,6,1},{5,6,1},{6,1,4} };
 	vector<int> perm = { 3,1,6,5,4,2 };
 	ASSERT_EQ(gm, grassmannNecklace(perm));
-	gm = 
+	perm = { 3,6,8,1,4,7,2,5 };
+	gm = { {1,2,4,5},{2,3,4,5},{3,4,5,6},{4,5,6,8},
+		{5,6,8,1},{6,8,1,4},{7,8,1,4},{8,1,2,4} };
+	ASSERT_EQ(gm, grassmannNecklace(perm));
+	perm = { 2,3,1,5,4 };
+	gm = { {1,4},{2,4},{3,4},{4,1},{5,1} };
+	ASSERT_EQ(gm, grassmannNecklace(perm));
 }

@@ -26,7 +26,7 @@ bool galeCompare(int a, int b, int i, int n) {
 
 
 // Returns the inverse of a vector assuming it is a valid permutation
-vector<int> inverse(vector<int> permutation, int length) {
+vector<int> inverse(const vector<int> permutation, const int length) {
 	vector<int> inverse;
 	for (int i = 1; i <= length; i++) {
 			for (int j = 1; j <= length; j++) {
@@ -40,9 +40,9 @@ vector<int> inverse(vector<int> permutation, int length) {
 }
 
 // Computes the grassmann necklace of a derangement and gives each element
-// ordered under i.
+// ordered under i. Done by removing k-1 and replacing with item at index k-1
 // permutation: The permutation to build a grassmann necklace out of
-vector<vector<int>> grassmannNecklace(vector<int> permutation) {
+vector<vector<int>> grassmannNecklace(const vector<int> permutation) {
 	int length = permutation.size();
 	vector<vector<int>> grassmann;
 
@@ -66,3 +66,32 @@ vector<vector<int>> grassmannNecklace(vector<int> permutation) {
 	}
 	return grassmann;
 }
+
+//From coliru (http://coliru.stacked-crooked.com/a/298717e152602a34)
+template<typename BidiIter, typename CBidiIter,
+	typename Compare = std::less<typename BidiIter::value_type>>
+	int next_comb(BidiIter first, BidiIter last,
+		CBidiIter /* first_value */, CBidiIter last_value,
+		Compare comp = Compare()) {
+	/* 1. Find the rightmost value which could be advanced, if any */
+	auto p = last;
+	while (p != first && !comp(*(p - 1), *--last_value)) --p;
+	if (p == first) return false;
+	/* 2. Find the smallest value which is greater than the selected value */
+	for (--p; comp(*p, *(last_value - 1)); --last_value) {}
+	/* 3. Overwrite the suffix of the subset with the lexicographically smallest
+	*    sequence starting with the new value */
+	while (p != last) *p++ = *last_value++;
+	return true;
+}
+
+// Finds all of the bases of a specific grassman necklace.
+vector<vector<int>> findBases(const vector<vector<int>> grassmann) {
+	vector<vector<int>> bases;
+	int grassmannLength = grassmann.size;
+	int beadSize = grassmann[0].size;
+
+
+	return bases;
+}
+
