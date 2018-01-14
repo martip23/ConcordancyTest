@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <vector>
 #include <set>
+#include <string>
 #include <stdlib.h>
 using namespace std;
 
@@ -67,30 +68,34 @@ vector<vector<int>> grassmannNecklace(const vector<int> permutation) {
 	return grassmann;
 }
 
-//From coliru (http://coliru.stacked-crooked.com/a/298717e152602a34)
-template<typename BidiIter, typename CBidiIter,
-	typename Compare = std::less<typename BidiIter::value_type>>
-	int next_comb(BidiIter first, BidiIter last,
-		CBidiIter /* first_value */, CBidiIter last_value,
-		Compare comp = Compare()) {
-	/* 1. Find the rightmost value which could be advanced, if any */
-	auto p = last;
-	while (p != first && !comp(*(p - 1), *--last_value)) --p;
-	if (p == first) return false;
-	/* 2. Find the smallest value which is greater than the selected value */
-	for (--p; comp(*p, *(last_value - 1)); --last_value) {}
-	/* 3. Overwrite the suffix of the subset with the lexicographically smallest
-	*    sequence starting with the new value */
-	while (p != last) *p++ = *last_value++;
-	return true;
+vector<vector<int>> subsetsOfSizeN(int n, int k) {
+	vector<vector<int>> bases;
+
+	string bitmask(k, 1); // K leading 1's
+	bitmask.resize(n, 0); // N-K trailing 0's
+	int timesIterated = 0;
+						  // print integers and permute bitmask
+	do {
+		bases.push_back({});
+		for (int i = 0; i < n; ++i) // [0..N-1] integers
+		{
+			if (bitmask[i]) {
+				bases[timesIterated].push_back(i+1);
+			}
+		}
+		timesIterated++;
+	} while (prev_permutation(bitmask.begin(), bitmask.end()));
+	
+	return bases;
 }
 
 // Finds all of the bases of a specific grassman necklace.
 vector<vector<int>> findBases(const vector<vector<int>> grassmann) {
 	vector<vector<int>> bases;
-	int grassmannLength = grassmann.size;
-	int beadSize = grassmann[0].size;
+	int grassmannLength = grassmann.size();
+	int beadSize = grassmann[0].size();
 
+//	vector<int> subset{ values.cbegin(), values.cbegin() + beadSize };
 
 	return bases;
 }
