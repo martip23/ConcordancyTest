@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2020
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConcordancyTestSource", "ConcordancyTestSource\ConcordancyTestSource.vcxproj", "{5D7A4098-49C5-4BF5-B8E9-5AB7CCEA6A16}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConcordancyTestSource", "Concordancy\ConcordancyTestSource.vcxproj", "{5D7A4098-49C5-4BF5-B8E9-5AB7CCEA6A16}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConcordancySrcTest", "ConcordancySrcTest\ConcordancySrcTest.vcxproj", "{5D060849-B658-4FD2-BE7D-C723F4BD349F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConcordancySrcTest", "Tests\ConcordancySrcTest.vcxproj", "{5D060849-B658-4FD2-BE7D-C723F4BD349F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
