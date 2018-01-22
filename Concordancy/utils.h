@@ -150,7 +150,7 @@ int rankFind(vector<int> base, vector<vector<int>> bases) {
 				return baseRank;
 		}
 		if (baseRank > maxRank)
-			maxRank == baseRank;
+			maxRank = baseRank;
 	}
 	return maxRank;
 }
