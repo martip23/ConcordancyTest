@@ -22,7 +22,6 @@ int mod(int a, int b) {
 // n: ground set
 // ALL INTS MUST BE POSITIVE INTEGERS
 bool galeCompare(int a, int b, int i, int n) {
-	if (a == b) { return true; }
 	return mod(a - i, n) < mod(b - i, n);
 }
 
@@ -103,13 +102,13 @@ vector<vector<int>> findBases(const vector<vector<int>> grassmann) {
 
 		// Grab a bead
 		for (int j = 1; j <= gmLength; j++) {
-			sort(subsets[i-1].begin(), subsets[i-1].end(), [j, beadSize](int a, int b) {
-				return galeCompare(a, b, j, beadSize); });
+			sort(subsets[i-1].begin(), subsets[i-1].end(), [j, gmLength](int a, int b) {
+				return galeCompare(a, b, j, gmLength); });
 
 			// Compare subset digit with bead digit
 			for (int k = 1; k <= beadSize; k++) {
 				if (galeCompare(subsets[i - 1][k - 1],
-					grassmann[j - 1][k - 1], i, gmLength)) {
+					grassmann[j - 1][k - 1], j, gmLength)) {
 					good = false;
 					break;
 				}
@@ -125,3 +124,42 @@ vector<vector<int>> findBases(const vector<vector<int>> grassmann) {
 	return bases;
 }
 
+// Checks rank of base against bases
+int rankFind(vector<int> base, vector<vector<int>> bases) {
+	int baseRank = 0;
+	int maxRank = 0;
+	int basesListSize = bases.size();
+	int baseSize = base.size();
+	int basesListElementSize = bases[0].size();
+
+	// Each base
+	for (int i = 0; i < basesListSize; i++) {
+		baseRank = 0;
+		// For each digit in base
+		for (int j = 0; j < baseSize; j++) {
+			// For each digit in selected base
+			for (int k = 0; k < basesListElementSize; k++) {
+				if (base[j] == bases[i][k]) {
+					baseRank++;
+					break;
+				}
+				else if (base[j] < bases[i][k])
+					break;
+			}
+			if (baseRank == baseSize || baseRank == basesListElementSize) {}
+				return baseRank;
+		}
+		if (baseRank > maxRank)
+			maxRank == baseRank;
+	}
+	return maxRank;
+}
+
+// Checks if the flat is actually a flat.
+bool isAFlat(vector<int> base, vector<vector<int>> bases, int n) {
+	for (int i = 0; i < n; i++) {
+
+	}
+
+	return false;
+}
