@@ -146,9 +146,9 @@ int rankFind(vector<int> base, vector<vector<int>> bases) {
 				else if (base[j] < bases[i][k])
 					break;
 			}
-			if (baseRank == baseSize || baseRank == basesListElementSize) {}
-				return baseRank;
 		}
+		if (baseRank == baseSize || baseRank == basesListElementSize)
+			return baseRank;
 		if (baseRank > maxRank)
 			maxRank = baseRank;
 	}
