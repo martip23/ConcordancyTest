@@ -1,4 +1,5 @@
 #pragma once
+
 #include <algorithm>
 #include <vector>
 #include <set>
@@ -7,7 +8,6 @@
 using namespace std;
 
 // Utilities for concordancy test
-
 
 // Custom mod function since % is only "division remainder"
 int mod(int a, int b) {
@@ -156,10 +156,32 @@ int rankFind(vector<int> base, vector<vector<int>> bases) {
 }
 
 // Checks if the flat is actually a flat.
-bool isAFlat(vector<int> base, vector<vector<int>> bases, int n) {
+// n is the size of the permutation
+bool isAFlat(vector<int> base, const vector<vector<int>> bases, int n) {
+	int baseRank = rankFind(base, bases);
+	int baseSize = base.size();
+	if (baseSize == baseRank) return true;
+
 	for (int i = 0; i < n; i++) {
+		bool breakLoop = false;
 
+		// Break loop (don't do check) if i is already in base
+		for (int j = 0; j < baseSize; j++) {
+			if (i + 1 == base[j]) {
+				breakLoop = true;
+				break;
+			}
+		}
+
+		if (breakLoop) continue;
+		int newRank;
+		base.push_back(i + 1);
+		newRank = rankFind(base, bases);
+		base.pop_back();
+		if (newRank > baseRank) { }
+		else {
+			return false;
+		}
 	}
-
-	return false;
+	return true;
 }
