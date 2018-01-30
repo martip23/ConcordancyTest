@@ -68,6 +68,7 @@ vector<vector<int>> grassmannNecklace(const vector<int> permutation) {
 	return grassmann;
 }
 
+// Finds all subsets of size n from a permutation size k
 vector<vector<int>> subsetsOfSizeN(int n, int k) {
 	vector<vector<int>> subsets;
 
@@ -160,7 +161,8 @@ int rankFind(vector<int> base, vector<vector<int>> bases) {
 bool isAFlat(vector<int> base, const vector<vector<int>> bases, int n) {
 	int baseRank = rankFind(base, bases);
 	int baseSize = base.size();
-	if (baseSize == baseRank) return true;
+	int basesSize = bases[0].size();
+	if (basesSize == baseRank) return true;
 
 	for (int i = 0; i < n; i++) {
 		bool breakLoop = false;
@@ -172,8 +174,8 @@ bool isAFlat(vector<int> base, const vector<vector<int>> bases, int n) {
 				break;
 			}
 		}
-
 		if (breakLoop) continue;
+
 		int newRank;
 		base.push_back(i + 1);
 		newRank = rankFind(base, bases);
@@ -184,4 +186,38 @@ bool isAFlat(vector<int> base, const vector<vector<int>> bases, int n) {
 		}
 	}
 	return true;
+}
+
+/*
+	Finds and creates a list of all the flats of a set of bases.
+	@bases - the bases of a permutation
+	@n - size of permutation [n]
+	*/
+vector<vector<int>> findFlats(const vector<vector<int>> bases, int n) {
+	vector<vector<int>> flatsSet;
+	for (int i = 0; i < n; i++) {
+		vector<vector<int>> tempFlatsSet;
+		tempFlatsSet = subsetsOfSizeN(i + 1, n);
+		flatsSet.insert(flatsSet.end, tempFlatsSet.begin, tempFlatsSet.end);
+	}
+
+	for (int i = 0; i < flatsSet.size(); i++) {
+		if (isAFlat(flatsSet[i], bases, n)) {}
+		else {
+			flatsSet.erase(i);
+		}
+	}
+	return flatsSet;
+}
+
+/*
+		Checks whether 2 sets of bases are concordant. Concordant means that
+		all flats of base1 are also flats of base2
+		@bases1 - First set of bases
+		@bases2 - Second set of bases
+		@n - size of permutation [n]
+*/
+bool isConcordant(const vector<vector<int>> bases1,
+	const vector<vector<int>> base2, int n) {
+
 }
