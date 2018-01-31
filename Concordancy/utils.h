@@ -162,7 +162,7 @@ bool isAFlat(vector<int> base, const vector<vector<int>> bases, int n) {
 	int baseRank = rankFind(base, bases);
 	int baseSize = base.size();
 	int basesSize = bases[0].size();
-	if (basesSize == baseRank) return true;
+	if (basesSize == n) return true;
 
 	for (int i = 0; i < n; i++) {
 		bool breakLoop = false;
@@ -180,8 +180,7 @@ bool isAFlat(vector<int> base, const vector<vector<int>> bases, int n) {
 		base.push_back(i + 1);
 		newRank = rankFind(base, bases);
 		base.pop_back();
-		if (newRank > baseRank) { }
-		else {
+		if (newRank <= baseRank) {
 			return false;
 		}
 	}
@@ -195,18 +194,30 @@ bool isAFlat(vector<int> base, const vector<vector<int>> bases, int n) {
 	*/
 vector<vector<int>> findFlats(const vector<vector<int>> bases, int n) {
 	vector<vector<int>> flatsSet;
-	for (int i = 0; i < n; i++) {
+	int baseSize = bases[0].size();
+
+	// Add subsets of baseSize - 1
+	for (int i = 1; i < baseSize; i++) {
 		vector<vector<int>> tempFlatsSet;
-		tempFlatsSet = subsetsOfSizeN(i + 1, n);
-		flatsSet.insert(flatsSet.end, tempFlatsSet.begin, tempFlatsSet.end);
+		tempFlatsSet = subsetsOfSizeN(n, i);
+		flatsSet.insert(flatsSet.end(), tempFlatsSet.begin(), tempFlatsSet.end());
 	}
 
+	// Prune subsets that are not flats
 	for (int i = 0; i < flatsSet.size(); i++) {
 		if (isAFlat(flatsSet[i], bases, n)) {}
 		else {
-			flatsSet.erase(i);
+			flatsSet.erase(flatsSet.begin() + i);
 		}
 	}
+
+	vector<int> tempVect;
+	// Push biggest rank
+	for (int i = 1; i <= n; i++) {
+		tempVect.push_back(i);
+	}
+	flatsSet.push_back(tempVect);
+
 	return flatsSet;
 }
 
@@ -219,5 +230,5 @@ vector<vector<int>> findFlats(const vector<vector<int>> bases, int n) {
 */
 bool isConcordant(const vector<vector<int>> bases1,
 	const vector<vector<int>> base2, int n) {
-
+	return false;
 }
