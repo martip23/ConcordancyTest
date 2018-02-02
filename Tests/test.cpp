@@ -129,6 +129,7 @@ TEST(IsAFlat, IsAFlat) {
 	base = { 1 };
 	expected = true;
 	ASSERT_EQ(expected, isAFlat(base, bases, 8));
+	expected = false;
 	base = { 1,2,3,4,5 };
 	ASSERT_EQ(expected, isAFlat(base, bases, 8));
 	base = { 2,3 };
@@ -149,4 +150,12 @@ TEST(FindFlats, FindingFlats) {
 	bases = findBases(grassmannNecklace(permutation));
 	flats = { {1}, {2}, {3}, {4}, {1,2,3,4} };
 	ASSERT_EQ(flats, findFlats(bases, 4));
+}
+
+TEST(IsConcordant, PassingFlats) {
+	vector<vector<int>> lgFlats = {
+		{ 1 },{ 2 },{ 3 },{ 4 },{ 1,2 },{ 1,3 },{ 1,4 },{ 2,3 },{ 2,4 },{ 3,4 },{ 1,2,3,4 } };
+	vector<vector<int>> smFlats = { { 1 },{ 2 },{ 3 },{ 4 },{ 1,2,3,4 } };
+	
+	ASSERT_EQ(true, isConcordant(smFlats, lgFlats));
 }

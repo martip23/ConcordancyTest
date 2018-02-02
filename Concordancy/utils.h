@@ -224,11 +224,28 @@ vector<vector<int>> findFlats(const vector<vector<int>> bases, int n) {
 /*
 		Checks whether 2 sets of bases are concordant. Concordant means that
 		all flats of base1 are also flats of base2
-		@bases1 - First set of bases
-		@bases2 - Second set of bases
-		@n - size of permutation [n]
+		@bases1 - Smaller flats
+		@bases2 - Bigger flats
 */
-bool isConcordant(const vector<vector<int>> bases1,
-	const vector<vector<int>> base2, int n) {
-	return false;
+bool isConcordant(const vector<vector<int>> smFlats,
+	const vector<vector<int>> lgFlats) {
+	const int smSize = smFlats.size();
+	const int lgSize = lgFlats.size();
+
+	// Get each small flat
+	for (int i = 0; i < smSize; i++) {
+		bool found = false;
+		// Get each flat in the same index or higher (matching flats will never
+		// be at indexes below i
+		for (int j = i; j < lgSize; j++) {
+			if (smFlats[i] == lgFlats[j]) {
+				found = true;
+				break;
+			}
+		}
+		if (found == false) {
+			return false;
+		}
+	}
+	return true;
 }
