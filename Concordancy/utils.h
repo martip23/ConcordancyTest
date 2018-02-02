@@ -5,6 +5,7 @@
 #include <set>
 #include <string>
 #include <stdlib.h>
+#include <iostream>
 using namespace std;
 
 // Utilities for concordancy test
@@ -126,7 +127,7 @@ vector<vector<int>> findBases(const vector<vector<int>> grassmann) {
 }
 
 // Checks rank of base against bases
-int rankFind(vector<int> base, vector<vector<int>> bases) {
+int rankFind(const vector<int> base, const vector<vector<int>> bases) {
 	int baseRank = 0;
 	int maxRank = 0;
 	int basesListSize = bases.size();
@@ -248,4 +249,15 @@ bool isConcordant(const vector<vector<int>> smFlats,
 		}
 	}
 	return true;
+}
+
+/*
+	Checks whether two permutations are concordant.
+	@perm1 - Smaller permutation
+	@perm2 - Larger permutation
+*/
+bool isConcordant(const vector<int> perm1, const vector<int> perm2) {
+	return isConcordant(
+		findFlats(findBases(grassmannNecklace(perm1)), perm1.size()) ,
+		findFlats(findBases(grassmannNecklace(perm2)), perm2.size()));
 }
