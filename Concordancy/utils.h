@@ -8,7 +8,14 @@
 #include <iostream>
 using namespace std;
 
-// Utilities for concordancy test
+/* Set of utilities to be used with matroids. Includes gale ordering greater
+	than function, modular arithmetic, inverse permutation, grassmann Necklace,
+	finds subsets of a certain size of a value, all bases pertaining to a 
+	grassmann necklace, ranks of subsets in a permutation, checks if a subset
+	is a flat of a permutation, a fucntion to find all flats of a permutation
+	and a function to check if two permutations are concordant.
+
+*/
 
 // Custom mod function since % is only "division remainder"
 int mod(int a, int b) {

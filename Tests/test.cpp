@@ -162,4 +162,11 @@ TEST(IsConcordant, PassingFlats) {
 	vector<int> perm2 = { 4,1,2,3 };
 	vector<int> perm1 = { 3,4,1,2 };
 	ASSERT_EQ(true, isConcordant(perm1, perm2));
+
+	lgFlats = {
+		{ 1 },{ 2 },{ 3 },{ 4 },{ 1,2 },{ 1,3 },{ 1,4 },{ 2,3 },{ 2,4 },{ 3,4 },{ 1,2,3,4 } };
+	smFlats = {
+		{1}, {1,2,3}
+	};
+	ASSERT_EQ(false, isConcordant(smFlats, lgFlats));
 }
